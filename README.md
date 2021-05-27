@@ -1,10 +1,11 @@
 # cmake_example for pybind11
+---
 **based on official cmake repo, aims to solve dynamic library loading in python packages**
 when python find dynamic library location,
 1. using rpath in unix/darwin
-2. using PATH in windows(add_all_directory python version >= 3.8)\\
+2. using PATH in windows(add_all_directory python version >= 3.8)
 
-
+---
 [![Gitter][gitter-badge]][gitter-link]
 
 |      CI              | status |
