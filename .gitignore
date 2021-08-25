@@ -9,3 +9,4 @@ _generate/
 *.ilk
 *.pdb
 *.dll
+pybind11/

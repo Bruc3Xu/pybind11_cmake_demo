@@ -44,7 +44,6 @@ class CMakeBuild(build_ext):
         cmake_args = [
             "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={}".format(extdir),
             "-DPYTHON_EXECUTABLE={}".format(sys.executable),
-            "-DEXAMPLE_VERSION_INFO={}".format(self.distribution.get_version()),
             "-DCMAKE_BUILD_TYPE={}".format(cfg),  # not used on MSVC, but no harm
 
             # Unix: rpath to current dir when packaged
@@ -55,23 +54,17 @@ class CMakeBuild(build_ext):
             #          or same dir as calling executable
         ]
         if sys.platform == "darwin":
-            cmake_args.append('-DCMAKE_INSTALL_RPATH=@loader_path/third_party/')
+            cmake_args.append('-DCMAKE_INSTALL_RPATH=@loader_path/')
         else:
             # values: linux*, aix, freebsd, ...
             #   just as well win32 & cygwin (although Windows has no RPaths)
-            cmake_args.append('-DCMAKE_INSTALL_RPATH=$ORIGIN/third_party/')
+            cmake_args.append('-DCMAKE_INSTALL_RPATH=$ORIGIN/')
 
         build_args = []
 
         if self.compiler.compiler_type != "msvc":
-            # Using Ninja-build since it a) is available as a wheel and b)
-            # multithreads automatically. MSVC would require all variables be
-            # exported for Ninja to pick it up, which is a little tricky to do.
-            # Users can override the generator with CMAKE_GENERATOR in CMake
-            # 3.15+.
             if not cmake_generator:
-                cmake_args += ["-GNinja"]
-
+                cmake_args += ["-GUnix Makefiles"]
         else:
 
             # Single config generators are handled "normally"
@@ -118,8 +111,8 @@ class CMakeBuild(build_ext):
 setup(
     name="cmake_example",
     version="0.0.1",
-    author="Dean Moldovan",
-    author_email="dean0x7d@gmail.com",
+    author="Ruchen Xu",
+    author_email="ruchenxucs@gmail.com",
     description="A test project using pybind11 and CMake",
     long_description="",
     ext_modules=[CMakeExtension("cmake_example")],

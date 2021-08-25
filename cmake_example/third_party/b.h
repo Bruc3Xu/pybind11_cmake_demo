@@ -1,3 +1,3 @@
 #include "a.h"
 
-int __declspec(dllexport) divide(int a, int b);
+LIB_API int divide(int a, int b);
