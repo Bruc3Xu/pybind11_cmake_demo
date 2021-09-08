@@ -16,4 +16,4 @@ if sys.platform == "win32":
     else:
         os.add_dll_directory(lib_path)
 
-from .cmake_example import *
+from .cmake_example import add, add_pi, subtract, divide

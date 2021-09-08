@@ -2,7 +2,6 @@
 import os
 import subprocess
 import sys
-
 from setuptools import Extension, find_packages, setup
 from setuptools.command.build_ext import build_ext
 
@@ -104,6 +103,7 @@ class CMakeBuild(build_ext):
         subprocess.check_call(
             ["cmake", "--build", "."] + build_args, cwd=self.build_temp
         )
+        subprocess.check_call([f"cp cpp/libs/* {extdir}/"], shell=True, cwd=ext.sourcedir)
 
 
 # The information here can also be placed in setup.cfg - better separation of
@@ -119,5 +119,5 @@ setup(
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,
     packages=find_packages(),
-    package_data={"": ["third_party/*dll", "third_party/*so"]}
+    package_data={"": ["cpp/libs/*dll", "cpp/libs/*so"]}
 )
